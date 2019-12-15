@@ -58,10 +58,10 @@ void NCursesDisplay::setup() {
   }
   // box(stdscr, '#', '#');
   init_pair(COL_WALL, COLOR_BLACK, COLOR_GREEN);
-  init_pair(COL_PLAYER, COLOR_CYAN, COLOR_BLUE);
+  init_pair(COL_PLAYER, COLOR_BLACK, COLOR_BLUE);
   init_pair(COL_FOOD, COLOR_YELLOW, COLOR_YELLOW);
   init_pair(COL_ZOMBIE, COLOR_MAGENTA, COLOR_RED);
-  init_pair(COL_EMPTY, COLOR_WHITE, COLOR_BLACK);
+  init_pair(COL_EMPTY, COLOR_BLACK, COLOR_BLACK);
   wbkgd(win, COLOR_PAIR(COL_EMPTY));
 }
 
@@ -85,8 +85,8 @@ Point NCursesDisplay::place_food()
 {
     int y, x;
     do {
-        y = Utils::random_int_in_range(5,TEXT_LINES-5);
-        x = Utils::random_int_in_range(5,TEXT_COLS-5);
+        y = Utils::random_int_in_range(9,TEXT_LINES-9);
+        x = Utils::random_int_in_range(10,TEXT_COLS-12);
     } while (!is_move_okay(y,x));
     mvwaddch(win, y, x, '*' | A_BOLD | COLOR_PAIR(COL_FOOD));
     wrefresh(win);
@@ -96,8 +96,8 @@ Point NCursesDisplay::place_zombie()
 {
     int y, x;
     do {
-        y = Utils::random_int_in_range(10,TEXT_LINES-1);
-        x = Utils::random_int_in_range(10,TEXT_COLS-1);
+        y = Utils::random_int_in_range(15,TEXT_LINES-1);
+        x = Utils::random_int_in_range(20,TEXT_COLS-1);
     } while (!is_move_okay(y,x));
     mvwaddch(win, y, x, '8' | A_BOLD | COLOR_PAIR(COL_ZOMBIE));
     wrefresh(win);
