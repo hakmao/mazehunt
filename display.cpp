@@ -56,7 +56,6 @@ void NCursesDisplay::setup() {
     refresh();
     getch();
   }
-  // box(stdscr, '#', '#');
   init_pair(COL_WALL, COLOR_BLACK, COLOR_GREEN);
   init_pair(COL_PLAYER, COLOR_BLACK, COLOR_BLUE);
   init_pair(COL_FOOD, COLOR_YELLOW, COLOR_YELLOW);
