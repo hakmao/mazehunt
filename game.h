@@ -7,12 +7,6 @@
 
 enum class Score { W, L };
 
-enum class Entity {
-    Player,
-    Food,
-    Zombie
-};
-
 class Game {
 public:
   Game();
@@ -24,19 +18,19 @@ private:
   // game window size
   int win_width, win_height;
   // current position of the player
-  Point pos_player;
+  // Point pos_player;
   // current position of the monster
-  Point pos_zombie;
+  // Point pos_zombie;
   // current food position
-  Point pos_food;
+  // Point pos_food;
   // current food relative position
-  PointF rel_food;
+  // PointF rel_food;
   // score
   Score score;
   // flag that goes up when we reach the goal
-  bool goal_reached;
+  // bool game_over;
   // flag that goes up when the user quits
-  bool exit_requested;
+  // bool exit_requested;
   // timers
   clock_t curr, last;
   // game window
