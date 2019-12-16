@@ -2,7 +2,7 @@
 
 `mazehunt` is a terminal game written in C++ using the ncurses library.
 
-You move the player character using the arrow keys [`↑ ↓ ← →`], [`w-a-s-d`], vi's [`h-j-k-l`].
+You move the player character using the arrow keys [`↑ ↓ ← →`] or [`w-a-s-d`].
 
 [`q`] quits the game.
 
