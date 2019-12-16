@@ -22,6 +22,7 @@ void NCursesDisplay::setup() {
   check_colours();
   start_color();         // enable colour
   curs_set(0); // make cursor invisible
+  halfdelay(10);
 
   win = newwin(0, 0, 0, 0);
   if (win == NULL) {
@@ -111,6 +112,9 @@ void NCursesDisplay::place_zombie() {
   wrefresh(win);
   zombie_pos = {y, x};
 }
+void NCursesDisplay::move_zombie()
+{
+}
 bool NCursesDisplay::is_move_okay(int y, int x) {
   int testch = mvwinch(win, y, x) & A_CHARTEXT;
   return (testch == CH_EMPTY || testch == CH_FOOD || testch == CH_ZOMBIE);
@@ -177,6 +181,7 @@ void NCursesDisplay::input_loop() {
   else
     mvwaddstr(win, 10, 25, "You Lost! Better luck next time...\n");
   wattroff(win, COLOR_PAIR(COL_STATUS));
+  halfdelay(20); // lengthen half-delay 
   wgetch(win);
   endwin();
 }

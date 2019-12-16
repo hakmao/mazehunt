@@ -52,6 +52,7 @@ class NCursesDisplay
         void place_player();
         void place_food();
         void place_zombie();
+        void move_zombie();
         void show(Entity);
         void update();
         bool game_over();
