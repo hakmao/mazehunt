@@ -18,7 +18,7 @@ Game::Game()
 {
   win_height = SCREEN_LINES;
   win_width = SCREEN_COLS;
-  score = Score::L;
+  // score = Score::L;
   // game_over = false;
   // exit_requested = false;
   maze = new Grid(GRID_ROWS, GRID_COLS);
@@ -36,7 +36,7 @@ void Game::exit(){
   delete maze;
 }
 
-void Game::start() {
+void Game::run() {
   /* setup the starting maze configuration */
   display->start_grid(maze->to_str());
 }

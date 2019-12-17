@@ -1,8 +1,10 @@
 #ifndef NCURSES_DISPLAY_H
 #define NCURSES_DISPLAY_H
 
+#include <chrono>
 #include <string>
 #include <ncurses.h>
+#include <time.h>
 
 struct Point {
   int y; // y-coord ncurses display 
@@ -23,7 +25,6 @@ class NCursesDisplay
 {
     public:
         // data
-        bool exit_requested{false};
         bool player_won{false};
         // methods
         NCursesDisplay(int winh, int winw);
@@ -41,7 +42,11 @@ class NCursesDisplay
         Point player_pos;
         Point food_pos;
         Point zombie_pos;
-        Entity winner;
+        bool game_running{true};
+        // std::deque<Point> path;
+        // timers
+        // clock_t start, end;
+        // size_t frame_duration{10000};
         WINDOW* win;
         // methods
         void setup();
@@ -53,10 +58,11 @@ class NCursesDisplay
         void place_food();
         void place_zombie();
         void move_zombie();
-        void show(Entity);
+        void show();
         void update();
         bool game_over();
         void heuristic();
+        void get_user_input();
 }; 
 
 #endif

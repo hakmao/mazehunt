@@ -22,7 +22,6 @@ void NCursesDisplay::setup() {
   check_colours();
   start_color();         // enable colour
   curs_set(0); // make cursor invisible
-  halfdelay(10);
 
   win = newwin(0, 0, 0, 0);
   if (win == NULL) {
@@ -30,6 +29,7 @@ void NCursesDisplay::setup() {
     refresh();
     getch();
   }
+  nodelay(win, TRUE); // don't block waiting for input
   keypad(stdscr, TRUE);
   keypad(win, TRUE);
   init_pair(COL_WALL, COLOR_BLACK, COLOR_GREEN);
@@ -114,6 +114,7 @@ void NCursesDisplay::place_zombie() {
 }
 void NCursesDisplay::move_zombie()
 {
+  ;
 }
 bool NCursesDisplay::is_move_okay(int y, int x) {
   int testch = mvwinch(win, y, x) & A_CHARTEXT;
@@ -128,52 +129,47 @@ void NCursesDisplay::input_loop() {
       break;
     opt = wgetch(win);
     switch (opt) {
-    case 'w':
-    case 'W':
     case KEY_UP:
+    case 'w':
+    case 'k':
       if ((player_pos.y > 0) && is_move_okay(player_pos.y - 1, player_pos.x)) {
-        mvwaddch(win, player_pos.y, player_pos.x,
-                 CH_EMPTY | COLOR_PAIR(COL_EMPTY));
+        mvwaddch(win, player_pos.y, player_pos.x, CH_EMPTY | COLOR_PAIR(COL_EMPTY));
         player_pos.y -= 1;
       }
       break;
-    case 's':
-    case 'S':
     case KEY_DOWN:
+    case 's':
+    case 'j':
       if ((player_pos.y < TEXT_LINES - 1) &&
           is_move_okay(player_pos.y + 1, player_pos.x)) {
-        mvwaddch(win, player_pos.y, player_pos.x,
-                 CH_EMPTY | COLOR_PAIR(COL_EMPTY));
+        mvwaddch(win, player_pos.y, player_pos.x, CH_EMPTY | COLOR_PAIR(COL_EMPTY));
         player_pos.y += 1;
       }
       break;
-    case 'a':
-    case 'A':
     case KEY_LEFT:
+    case 'a':
+    case 'h':
       if ((player_pos.x > 0) && is_move_okay(player_pos.y, player_pos.x - 1)) {
-        mvwaddch(win, player_pos.y, player_pos.x,
-                 CH_EMPTY | COLOR_PAIR(COL_EMPTY));
+        mvwaddch(win, player_pos.y, player_pos.x, CH_EMPTY | COLOR_PAIR(COL_EMPTY));
         player_pos.x -= 1;
       }
       break;
-    case 'd':
-    case 'D':
     case KEY_RIGHT:
+    case 'd':
+    case 'l':
       if ((player_pos.x < TEXT_COLS - 1) &&
           is_move_okay(player_pos.y, player_pos.x + 1)) {
-        mvwaddch(win, player_pos.y, player_pos.x,
-                 CH_EMPTY | COLOR_PAIR(COL_EMPTY));
+        mvwaddch(win, player_pos.y, player_pos.x, CH_EMPTY | COLOR_PAIR(COL_EMPTY));
         player_pos.x += 1;
       }
       break;
     case 'q':
     case 'Q':
-      exit_requested = true;
+      game_running = false;
       break;
-    default:
-      continue;
     }
-  } while (!exit_requested);
+    // float delta = (static_cast<float>(curr - last) / CLOCKS_PER_SEC);
+  } while (game_running);
   wclear(win);
   wattron(win, COLOR_PAIR(COL_STATUS));
   if (player_won)
@@ -184,6 +180,10 @@ void NCursesDisplay::input_loop() {
   halfdelay(20); // lengthen half-delay 
   wgetch(win);
   endwin();
+}
+void NCursesDisplay::get_user_input()
+{
+;
 }
 
 void NCursesDisplay::update() {

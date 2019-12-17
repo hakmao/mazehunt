@@ -11,7 +11,7 @@ class Game {
 public:
   Game();
   ~Game();
-  void start();
+  void run();
   void exit();
 
 private:
@@ -26,7 +26,7 @@ private:
   // current food relative position
   // PointF rel_food;
   // score
-  Score score;
+  // Score score;
   // flag that goes up when we reach the goal
   // bool game_over;
   // flag that goes up when the user quits
