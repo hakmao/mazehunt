@@ -20,7 +20,7 @@ Thumbs.db
 .idea/
 workspace.xml
 .vscode/
-.clang-format
+*.clang-format
 
 # Log files and Temporary files
 # ===============
