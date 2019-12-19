@@ -1,4 +1,4 @@
-#include "cell.h"
+#include "node.h"
 
 Direction opposite_direction(Direction d)
 {
@@ -19,50 +19,50 @@ Direction opposite_direction(Direction d)
     }
 }
 
-Cell::Cell(int r, int c) : row{r}, col{c} {}
-int Cell::get_row()
+Node::Node(int r, int c) : row{r}, col{c} {}
+int Node::get_row()
 {
     return row;
 }
-int Cell::get_col()
+int Node::get_col()
 {
     return col;
 }
-void Cell::create_link_to(Direction d)
+void Node::create_link_to(Direction d)
 {
     if (links.count(d) < 1)
     {
         links.insert(d);
-        Cell *c = get_neighbour(d);
-        c->create_link_to(opposite_direction(d));
+        Node *n = get_neighbour(d);
+        n->create_link_to(opposite_direction(d));
     }
 }
-void Cell::unlink_from(Direction d)
+void Node::unlink_from(Direction d)
 {
     if (links.count(d) > 0)
     {
         links.erase(d);
-        Cell *c = get_neighbour(d);
-        c->unlink_from(opposite_direction(d));
+        Node *n = get_neighbour(d);
+        n->unlink_from(opposite_direction(d));
     }
 }
-bool Cell::is_linked_to(Direction d)
+bool Node::is_linked_to(Direction d)
 {
     return (links.count(d) > 0);
 }
-std::set<Direction> Cell::all_links()
+std::set<Direction> Node::all_links()
 {
     return links;
 }
-void Cell::set_neighbour(Direction d, Cell *cell)
+void Node::set_neighbour(Direction d, Node *node)
 {
-    neighbours[d] = cell;
+    neighbours[d] = node;
 }
-Cell *Cell::get_neighbour(Direction d)
+Node *Node::get_neighbour(Direction d)
 {
     return neighbours[d];
 }
-std::map<Direction, Cell *> Cell::all_neighbours()
+std::map<Direction, Node *> Node::all_neighbours()
 {
     return neighbours;
 }

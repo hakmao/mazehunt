@@ -2,7 +2,7 @@ CXX = g++
 CXXFLAGS = -c -std=c++17 
 LDFLAGS=-lncurses -Wall -std=c++17
 EXE = mazehunt
-OBJECTS = main.o input_parser.o game.o display.o grid.o cell.o utils.o 
+OBJECTS = main.o input_parser.o game.o display.o maze.o node.o utils.o 
 
 all: $(EXE)
 
@@ -21,10 +21,10 @@ game.o: game.cpp
 display.o: display.cpp 
 	$(CXX) $(CXXFLAGS) $< -o $@
 
-grid.o: grid.cpp 
+maze.o: maze.cpp 
 	$(CXX) $(CXXFLAGS) $< -o $@
 
-cell.o: cell.cpp 
+node.o: node.cpp 
 	$(CXX) $(CXXFLAGS) $< -o $@
 
 utils.o: utils.cpp 

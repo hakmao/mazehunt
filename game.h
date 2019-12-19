@@ -3,7 +3,7 @@
 
 #include <ncurses.h>
 #include "display.h"
-#include "grid.h"
+#include "maze.h"
 
 enum class Score { W, L };
 
@@ -36,7 +36,7 @@ private:
   // game window
   // WINDOW *win;
   // maze grid
-  Grid *maze;
+  Maze *maze;
   // display
   NCursesDisplay *display;
 
@@ -50,7 +50,7 @@ private:
   // void update(int newy, int newx);
   // void print_bottom(std::string text);
   // void print_status(std::string status, int align, int col);
-  bool ask_exit();
+  // bool ask_exit();
 };
 
 #endif

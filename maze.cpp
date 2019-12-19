@@ -2,112 +2,112 @@
 // #include <algorithm>
 #include <sstream>
 #include "utils.h"
-#include "grid.h"
+#include "maze.h"
 
 template <typename T>
 T *getPointer(T &t) { return &t; }
 
-Grid::Grid(int nrows, int ncols) : num_rows{nrows}, num_cols{ncols}
+Maze::Maze(int nrows, int ncols) : num_rows{nrows}, num_cols{ncols}
 {
     assert(1 <= nrows && 1 <= ncols);
-    cells.reserve(nrows * ncols);
+    nodes.reserve(nrows * ncols);
     setup();
     configure();
     generate();
 }
 
-bool Grid::is_valid_location(int row, int col)
+bool Maze::is_valid_location(int row, int col)
 {
     if (0 <= row && row < num_rows)
         return (0 <= col && col < num_cols);
     else
         return false;
 }
-int Grid::cell_index(int r, int c)
+int Maze::node_index(int r, int c)
 {
     return (r * num_cols) + c;
 }
-Cell *Grid::cell(int r, int c)
+Node *Maze::node(int r, int c)
 {
     if (is_valid_location(r, c))
-        return &cells[cell_index(r, c)];
+        return &nodes[node_index(r, c)];
     else
         return nullptr;
 }
 
-void Grid::setup()
+void Maze::setup()
 {
     for (int r{0}; r < num_rows; ++r)
     {
         for (int c{0}; c < num_cols; ++c)
         {
-            cells.emplace_back(r, c);
+            nodes.emplace_back(r, c);
         }
     }
 }
 
-void Grid::configure()
+void Maze::configure()
 {
-    for (auto &c : cells)
+    for (auto &c : nodes)
     {
         int row = c.get_row();
         int col = c.get_col();
-        c.set_neighbour(Direction::East, cell(row, col + 1));
-        c.set_neighbour(Direction::South, cell(row + 1, col));
-        c.set_neighbour(Direction::West, cell(row, col - 1));
-        c.set_neighbour(Direction::North, cell(row - 1, col));
+        c.set_neighbour(Direction::East, node(row, col + 1));
+        c.set_neighbour(Direction::South, node(row + 1, col));
+        c.set_neighbour(Direction::West, node(row, col - 1));
+        c.set_neighbour(Direction::North, node(row - 1, col));
     }
 }
-void Grid::generate()
+void Maze::generate()
 {
-    for (auto &c: cells)
+    for (auto &c: nodes)
         link(c);
 }
-void Grid::link(Cell& cell)
+void Maze::link(Node& node)
 {
    std::vector<Direction> ns(2);
-    // check if cell has neighbours to the east and north
-    Cell *east = cell.get_neighbour(Direction::East);
-    Cell *north = cell.get_neighbour(Direction::North);
+    // check if node has neighbours to the east and north
+    Node *east = node.get_neighbour(Direction::East);
+    Node *north = node.get_neighbour(Direction::North);
     if (east == nullptr && north == nullptr)
         return;
     else if (east == nullptr && north != nullptr)
-        cell.create_link_to(Direction::North);
+        node.create_link_to(Direction::North);
     else if (east != nullptr && north == nullptr)
-        cell.create_link_to(Direction::East);
-    else // Cell has both eastern and northern neighbours
+        node.create_link_to(Direction::East);
+    else // Node has both eastern and northern neighbours
     {
         ns = {Direction::East, Direction::North};
-        cell.create_link_to(ns[Utils::random_index(2)]);
+        node.create_link_to(ns[Utils::random_index(2)]);
     }
 }
 
-Cell *Grid::random_cell()
+Node *Maze::random_node()
 {
     int index = Utils::random_int_in_range(0, size() - 1);
 
-    return &cells[index];
+    return &nodes[index];
 }
 
-int Grid::size()
+int Maze::size()
 {
     return (num_rows * num_cols);
 }
-int Grid::count_rows()
+int Maze::count_rows()
 {
     return num_rows;
 }
-int Grid::count_cols()
+int Maze::count_cols()
 {
     return num_cols;
 }
 
-void Grid::for_each_cell(std::function<void(Cell &)> linker)
+void Maze::for_each_node(std::function<void(Node &)> linker)
 {
-    for_each(cells.begin(), cells.end(), linker);
+    for_each(nodes.begin(), nodes.end(), linker);
 }
 
-std::string Grid::to_str()
+std::string Maze::to_str()
 {
     std::string h_border("+");
     for (int c{0}; c < num_cols; c++)
@@ -118,7 +118,7 @@ std::string Grid::to_str()
     std::string v_separator("|");
     std::string corner("+");
     std::string h_separator("---");
-    std::string cell_gap("   ");
+    std::string node_gap("   ");
     // proceed by rows
     for (int r{0}; r < num_rows; r++)
     {
@@ -126,10 +126,10 @@ std::string Grid::to_str()
         std::string row_bottom(corner);
         for (int c{0}; c < num_cols; c++)
         {
-            std::string east_border = cell(r, c)->is_linked_to(Direction::East) ? " " : v_separator;
-            row_top += cell_gap;
+            std::string east_border = node(r, c)->is_linked_to(Direction::East) ? " " : v_separator;
+            row_top += node_gap;
             row_top += east_border;
-            std::string south_border = cell(r, c)->is_linked_to(Direction::South) ? cell_gap : h_separator;
+            std::string south_border = node(r, c)->is_linked_to(Direction::South) ? node_gap : h_separator;
             row_bottom += south_border;
             row_bottom += corner;
         }
@@ -141,7 +141,7 @@ std::string Grid::to_str()
 
     return output;
 }
-std::ostream &operator<<(std::ostream &out, Grid &g)
+std::ostream &operator<<(std::ostream &out, Maze &g)
 {
     return (out << g.to_str());
 }

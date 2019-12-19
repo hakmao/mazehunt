@@ -21,7 +21,7 @@ Game::Game()
   // score = Score::L;
   // game_over = false;
   // exit_requested = false;
-  maze = new Grid(GRID_ROWS, GRID_COLS);
+  maze = new Maze(GRID_ROWS, GRID_COLS);
   display = new NCursesDisplay(win_height, win_width);
 }
 Game::~Game()
