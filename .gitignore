@@ -33,6 +33,7 @@ log/*
 build/
 bin/
 mazehunt
+test.grid
 
 # C/C++
 *.o
