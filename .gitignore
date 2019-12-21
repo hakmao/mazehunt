@@ -32,8 +32,9 @@ log/*
 # Generated files and output directories
 build/
 bin/
+*.grid
+*_test
 mazehunt
-test.grid
 
 # C/C++
 *.o
