@@ -1,36 +1,53 @@
 CXX = g++
-CXXFLAGS = -c -std=c++17 
-LDFLAGS=-lncurses -Wall -std=c++17
+CXXFLAGS = -std=c++17 
+LDFLAGS= -lncurses 
 EXE = mazehunt
 OBJECTS = main.o input_parser.o game.o display.o maze.o node.o utils.o 
 
 all: $(EXE)
 
 $(EXE): $(OBJECTS)
-	$(CXX) $(LDFLAGS) -o $(EXE) $(OBJECTS)
+	$(CXX) $(LDFLAGS) $(CXXFLAGS) -o $(EXE) $(OBJECTS)
 
-main.o: main.cpp 
+main.o: main.cpp
 	$(CXX) $(CXXFLAGS) -c $< 
 
 input_parser.o: input_parser.cpp
 	$(CXX) $(CXXFLAGS) -c $<
 
 game.o: game.cpp 
-	$(CXX) $(CXXFLAGS) $< -o $@
+	$(CXX) $(CXXFLAGS) -c $< 
 
 display.o: display.cpp 
-	$(CXX) $(CXXFLAGS) $< -o $@
+	$(CXX) $(CXXFLAGS) -c $<
+
+grid.o: grid.cpp
+	$(CXX) $(CXXFLAGS) -c $<
 
 maze.o: maze.cpp 
-	$(CXX) $(CXXFLAGS) $< -o $@
+	$(CXX) $(CXXFLAGS) -c $< 
 
 node.o: node.cpp 
-	$(CXX) $(CXXFLAGS) $< -o $@
+	$(CXX) $(CXXFLAGS) -c $< 
 
 utils.o: utils.cpp 
-	$(CXX) $(CXXFLAGS) $< -o $@
+	$(CXX) $(CXXFLAGS) -c $< 
+
+# Tests
+maze_test: maze_test.o maze.o node.o utils.o
+	$(CXX) $(CXXFLAGS) $^ -o $@
+
+maze_test.o: maze_test.cpp
+	$(CXX) $(CXXFLAGS) -c $<
+
+grid_test: grid_test.o grid.o
+	$(CXX) $(CXXFLAGS) $^ -o $@
+
+grid_test.o: grid_test.cpp
+	$(CXX) $(CXXFLAGS) -c $<
+
 
 .PHONY: clean
 clean:
 	@echo "Cleaning up..."
-	rm *.o $(EXE)
+	rm *.o $(EXE) *_test
