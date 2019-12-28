@@ -33,7 +33,13 @@ node.o: node.cpp
 utils.o: utils.cpp 
 	$(CXX) $(CXXFLAGS) -c $< 
 
+search.o: search.cpp
+	$(CXX) $(CXXFLAGS) -c $<
+
 # Tests
+search_test: search_test.o search.o grid.o
+	$(CXX) $(CXXFLAGS) $^ -o $@
+
 maze_test: maze_test.o maze.o node.o utils.o
 	$(CXX) $(CXXFLAGS) $^ -o $@
 
@@ -46,6 +52,8 @@ grid_test: grid_test.o grid.o
 grid_test.o: grid_test.cpp
 	$(CXX) $(CXXFLAGS) -c $<
 
+search_test.o: search_test.cpp
+	$(CXX) $(CXXFLAGS) -c $<
 
 .PHONY: clean
 clean:

@@ -6,7 +6,7 @@
 
 bool operator== (const Grid& g1, const Grid& g2)
 {
-    return (g1.gridstate == g2.gridstate);
+    return (g1.state == g2.state);
 }
 
 bool operator!= (const Grid& g1, const Grid& g2)
@@ -19,7 +19,7 @@ Grid::Grid(){}
 
 Grid::Grid(vector<vector<State>> g)
 {
-    gridstate = g;
+    state = g;
 }
 
 Grid::Grid(string path)
@@ -34,36 +34,36 @@ int Grid::size()
 
 int Grid::rows()
 {
-    return gridstate.size();
+    return state.size();
 }
 
 int Grid::cols()
 {
-    return gridstate[0].size();
+    return state[0].size();
 }
 
-vector<vector<State>> Grid::state()
+GridLayout Grid::get_state()
 {
-    return gridstate;
+    return state;
 }
 
 void Grid::from_file(string path)
 {
-    if (!gridstate.empty())
-        gridstate.clear();
-    gridstate = read_file(path);
+    if (!state.empty())
+        state.clear();
+    state = read_file(path);
 }
 
 void Grid::to_file(string path)
 {
-    if (gridstate.empty())
+    if (state.empty())
         std::cerr << "Grid is empty: nothing to write." << std::endl;
     else
     {
         std::ofstream grid_file(path);
         if (grid_file)
         {
-            for (auto &row : gridstate)
+            for (auto &row : state)
             {
                 for (auto it = row.begin(); it != row.end(); it++)
                 {
@@ -81,7 +81,7 @@ void Grid::to_file(string path)
 
 string Grid::to_str()
 {
-    if (gridstate.empty())
+    if (state.empty())
     {
         std::cerr << "Grid is empty: nothing to write." << std::endl;
         return "";
@@ -89,7 +89,7 @@ string Grid::to_str()
     else
     {
         std::ostringstream oss;
-        for (auto& row : gridstate)
+        for (auto& row : state)
         {
             for (auto it = row.begin(); it != row.end(); it++)
             {

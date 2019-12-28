@@ -15,12 +15,12 @@ using std::vector;
 // TODO: Add kStart and KFinish enumerators to the State enum.
 enum class State
 {
-    kEmpty,
-    kObstacle,
-    kClosed,
-    kStart,
-    kFinish,
-    kPath
+    Empty,
+    Obstacle,
+    Closed,
+    Start,
+    Finish,
+    Path
 };
 
 // directional deltas
@@ -213,7 +213,7 @@ void PrintBoard(const vector<vector<State>> board)
     }
 }
 
-#include "search_test.cpp"
+#include "search_main_test.cpp"
 
 int main()
 {
