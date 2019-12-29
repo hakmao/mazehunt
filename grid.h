@@ -10,7 +10,7 @@ struct Cell
 {
     int x;
     int y;
-    Cell(int a, int b): x{a}, y{b}{}; // for emplace_back()
+    Cell(int a, int b): x{a}, y{b}{}; // for use with emplace_back()
 };
 
 enum class State
@@ -30,38 +30,30 @@ using GridLayout = vector <vector<State>>;
 class Grid
 {
 private:
+    // data
     GridLayout state{};
-
+    // methods
+    GridLayout read_file(string file);
     GridRow parse_line(string line);
 
-    GridLayout read_file(string file);
-
 public:
+    // Constructors
     Grid();
-
     Grid(GridLayout);
-
     Grid(string path);
+    // methods
+    string to_str() const;
+    bool from_file(string path);
+    bool to_file(string path);
+    GridLayout get_state() const;
+    int size() const;
+    int rows() const;
+    int cols() const;
 
-    string to_str();
-
-    void from_file(string path);
-
-    void to_file(string path);
-
-    GridLayout get_state();
-
-    int size();
-
-    int rows();
-
-    int cols();
-
-    friend bool operator==(const Grid& g1, const Grid& g2);
-
-    friend bool operator!=(const Grid& g1, const Grid& g2);
-
-    friend std::ostream& operator<<(std::ostream& out, Grid& g);
+    // friends
+    friend bool operator==(Grid const & g1, Grid const & g2);
+    friend bool operator!=(Grid const & g1, Grid const & g2);
+    friend std::ostream& operator<<(std::ostream& out, Grid const & g);
 
 };
 

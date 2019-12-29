@@ -27,37 +27,44 @@ Grid::Grid(string path)
     from_file(path);
 }
 
-int Grid::size()
+int Grid::size() const
 {
     return rows() * cols();
 }
 
-int Grid::rows()
+int Grid::rows() const
 {
     return state.size();
 }
 
-int Grid::cols()
+int Grid::cols() const
 {
     return state[0].size();
 }
 
-GridLayout Grid::get_state()
+GridLayout Grid::get_state() const
 {
     return state;
 }
 
-void Grid::from_file(string path)
+bool Grid::from_file(string path)
 {
     if (!state.empty())
         state.clear();
     state = read_file(path);
+    if (state.empty())
+        return false;
+    else
+        return true;
 }
 
-void Grid::to_file(string path)
+bool Grid::to_file(string path)
 {
     if (state.empty())
+    {
         std::cerr << "Grid is empty: nothing to write." << std::endl;
+        return false;
+    }
     else
     {
         std::ofstream grid_file(path);
@@ -71,15 +78,17 @@ void Grid::to_file(string path)
                 }
                 grid_file << "\n";
             }
+            return true;
         }
         else
         {
             std::cerr << "Could not open file for reading." << std::endl;
+            return false;
         }
     }
 }
 
-string Grid::to_str()
+string Grid::to_str() const
 {
     if (state.empty())
     {
@@ -101,7 +110,7 @@ string Grid::to_str()
     }
 }
 
-std::ostream &operator<<(std::ostream &out, Grid &g)
+std::ostream &operator<<(std::ostream &out, Grid const &g)
 {
     return (out << g.to_str());
 }
