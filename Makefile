@@ -24,6 +24,9 @@ display.o: display.cpp
 grid.o: grid.cpp
 	$(CXX) $(CXXFLAGS) -c $<
 
+gameview.o: gameview.cpp
+	$(CXX) $(CXXFLAGS) -c $<
+
 maze.o: maze.cpp 
 	$(CXX) $(CXXFLAGS) -c $< 
 
@@ -36,25 +39,36 @@ utils.o: utils.cpp
 search.o: search.cpp
 	$(CXX) $(CXXFLAGS) -c $<
 
-# Tests
+### Tests ###
+# Search
 search_test: search_test.o search.o grid.o
 	$(CXX) $(CXXFLAGS) $^ -o $@
 
+search_test.o: search_test.cpp
+	$(CXX) $(CXXFLAGS) -c $<
+
+# Maze
 maze_test: maze_test.o maze.o node.o utils.o
 	$(CXX) $(CXXFLAGS) $^ -o $@
 
 maze_test.o: maze_test.cpp
 	$(CXX) $(CXXFLAGS) -c $<
 
+# Grid
 grid_test: grid_test.o grid.o
 	$(CXX) $(CXXFLAGS) $^ -o $@
 
 grid_test.o: grid_test.cpp
 	$(CXX) $(CXXFLAGS) -c $<
 
-search_test.o: search_test.cpp
+# View
+gameview_test: gameview_test.o gameview.o grid.o
+	$(CXX) $(LDFLAGS) $(CXXFLAGS) $^ -o $@
+
+gameview_test.o: gameview_test.cpp
 	$(CXX) $(CXXFLAGS) -c $<
 
+# Clean up
 .PHONY: clean
 clean:
 	@echo "Cleaning up..."
