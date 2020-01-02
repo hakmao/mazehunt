@@ -25,6 +25,28 @@ int main()
 	std::cout << "\n- number of rows (expect 5): " << grid1.rows() << std::endl;
 	std::cout << "\n- number of cols(expect 6): " << grid1.cols() << std::endl;
 	std::cout << "\n- size (expect 5 x 6 = 30): " << grid1.size() << std::endl;
+	//
+	Cell myCell{0,0};
+    std::cout << "\n- is <0,0> on the grid? (expect true): " << grid1.is_on_grid(myCell) << std::endl;
+    //
+    myCell.x = 5; myCell.y = 4;
+    std::cout << "\n- is <5,4> on the grid? (expect true): " << grid1.is_on_grid(myCell) << std::endl;
+	//
+    myCell.x = 2; myCell.y = 3;
+	std::cout << "\n- is <2,3> on the grid? (expect true): " << grid1.is_on_grid(myCell) << std::endl;
+	//
+	myCell.x = -2;
+    std::cout << "\n- is <-2,3> on the grid? (expect false): " << grid1.is_on_grid(myCell) << std::endl;
+    //
+    myCell.x = 2; myCell.y = -3;
+    std::cout << "\n- is <2,-3> on the grid? (expect false): " << grid1.is_on_grid(myCell) << std::endl;
+    //
+    myCell.x = 10; myCell.y = 2;
+    std::cout << "\n- is <10,2> on the grid? (expect false): " << grid1.is_on_grid(myCell) << std::endl;
+    //
+    myCell.x = 2; myCell.y = 10;
+    std::cout << "\n- is <2,10> on the grid? (expect false): " << grid1.is_on_grid(myCell) << std::endl;
+    //
 	std::cout << "\n=== Create another Grid object ===\n";
 	Grid grid2(sample_grid_2);
 	std::cout << "\n=== Check if new Grid object is equal to first one (expect false) ===\n" << std::endl;

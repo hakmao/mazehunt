@@ -1,5 +1,5 @@
 #include <iostream>
-#include "gridview.h"
+#include "gameview.h"
 
 GridLayout grid_1 = {
 		{ State::Obstacle, State::Obstacle, State::Obstacle, State::Obstacle, State::Obstacle, State::Obstacle },
@@ -18,7 +18,7 @@ GridLayout grid_2 = {
 int main()
 {
 	auto grid_ptr = std::make_shared<GridLayout>(grid_1);
-	GridView gV{grid_ptr};
+	GameView gV{grid_ptr};
 
 	return 0;
 }

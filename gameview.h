@@ -1,5 +1,5 @@
-#ifndef GRIDVIEW_H
-#define GRIDVIEW_H
+#ifndef GameView_H
+#define GameView_H
 
 #include <chrono>
 #include <string>
@@ -16,11 +16,16 @@ struct Point
 	chtype ch;
 };
 
-class GridView
+class GameView
 {
 public:
-	GridView(std::shared_ptr<GridLayout> grd);
-	~GridView();
+
+	GameView(std::shared_ptr <GridLayout> grd);
+
+	GameView(std::shared_ptr <GridLayout> grd, int screen_H, int screen_W);
+
+	~GameView();
+
 	void terminate();
 //	bool exit_requested_by_user() const;
 //	void update(Cell old, Cell new);
@@ -30,21 +35,30 @@ public:
 private:
 	// data
 	bool exit_requested;
-	std::shared_ptr<GridLayout> grid;
+	std::shared_ptr <GridLayout> grid;
 //	GridLayout grid{};
 //	deque<Cell> player_path{};
 	WINDOW* win; // TODO: Use smart pointer instead of raw pointer
-	int window_height;
-	int window_width;
+	int grid_height;
+	int grid_width;
 	int screen_height;
 	int screen_width;
+
 	// methods
 	void setup();
+
 	void draw();
+
 	void refresh();
+
 	void input_loop();
-	void check_terminal_size();
-	void check_colours();
+
+	bool is_terminal_size_okay() const;
+
+	bool is_grid_size_okay() const;
+
+	void check_colours() const;
+
 	chtype cell_string(State cellState);
 //	void get_user_input();
 };
