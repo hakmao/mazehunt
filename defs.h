@@ -1,15 +1,15 @@
-#ifndef DEFS_H
-#define DEFS_H
+#ifndef MAZEHUNT_DEFS_H
+#define MAZEHUNT_DEFS_H
 #define VERSION "0.0.1"
+
+// grid representation
+const int SCREEN_LINES = 24;
+const int SCREEN_COLS = 80;
 
 // grid size
 const int GRID_COLS = 19;
 const int GRID_ROWS = 10;
-
-// grid representation
-const int SCREEN_LINES = 80;
-const int SCREEN_COLS = 24;
-
+//
 const int CELL_WIDTH = 3;
 const int CELL_HEIGHT = 1;
 const int WALL_WIDTH = 1;
@@ -27,10 +27,10 @@ constexpr const int TEXT_LINES =
 // typedef enum { WALL, EMPTY, PLAYER, FOOD, MONSTER } point_type;
 
 // characters
-#define CH_EMPTY ' '
-#define CH_PLAYER '@'
-#define CH_FOOD '*'
-#define CH_ZOMBIE '8'
+//#define CH_EMPTY ' '
+//#define CH_PLAYER '@'
+//#define CH_FOOD '*'
+//#define CH_ZOMBIE '8'
 
 // colours
 #define COL_WALL COLOR_RED
@@ -46,6 +46,6 @@ constexpr const int TEXT_LINES =
 // #define ALIGN_LEFT 1
 
 // return codes
-#define R_QUIT 0
+//#define R_QUIT 0
 
 #endif
