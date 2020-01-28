@@ -18,12 +18,15 @@ TEST_CASE("Node static functions")
     }
 }
 
-TEST_CASE("Node initialisation", "[node][maze]")
+TEST_CASE("Initialise Node ", "[node][maze]")
 {
-    Node node(5, 5);
-    Node nodeN(4, 5);
+    Node node(5, 5); // Origin
+    Node nodeN(4, 5); // East
+    Node nodeN(4, 5); // South
+    Node nodeN(4, 5); // West
+    Node nodeN(4, 5); // North
 
-    SECTION("Initialise data")
+    SECTION("Node data at initialisation")
     {
         CHECK(node.row == 5);
         CHECK(node.col == 5);
@@ -34,15 +37,21 @@ TEST_CASE("Node initialisation", "[node][maze]")
         CHECK(nodeN.links.empty());
         CHECK(nodeN.neighbours.empty());
     }
-    SECTION("Get neighbour coordinates")
+    SECTION("Check neighbour coordinates")
     {
-        auto [r1,c1] = node.neighbour_at( Direction::North);
-        auto [r2,c2] = nodeN.neighbour_at( Direction::South);
+        auto [rE,cE] = node.neighbour_at( Direction::East);
+        auto [rS,cS] = nodeN.neighbour_at( Direction::South);
+        auto [rW,cW] = node.neighbour_at( Direction::West);
+        auto [rN,cN] = node.neighbour_at( Direction::North);
 
-        CHECK(r1 == 4);
-        CHECK(c1 == 5);
-        CHECK(r2 == 5);
-        CHECK(c2 == 5);
+        CHECK(rN == 4);
+        CHECK(cN == 5);
+        CHECK(rS == 5);
+        CHECK(cS == 5);
+        CHECK(rE == 4);
+        CHECK(cE == 5);
+        CHECK(rW == 4);
+        CHECK(cW == 5);
     }
 }
 

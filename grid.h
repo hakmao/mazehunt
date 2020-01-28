@@ -11,7 +11,7 @@ struct Cell
 	int x;
 	int y;
 
-	Cell(int a, int b) : x{ a }, y{ b } {}; // for use with emplace_back()
+	Cell(int a, int b) : x{ a }, y{ b } {}; // needed for emplace_back()
 };
 
 enum class State
@@ -26,7 +26,6 @@ enum class State
 
 using GridRow = vector<State>;
 using GridLayout = vector <vector<State>>;
-//using Path = deque<Cell>;
 
 class Grid
 {

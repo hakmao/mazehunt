@@ -63,10 +63,10 @@ maze_tests.o: maze_tests.cpp
 	$(CXX) $(CXXFLAGS) -c $<
 
 # Grid
-grid_test: grid_test.o grid.o
+grid_tests: grid_tests.o grid.o
 	$(CXX) $(CXXFLAGS) $^ -o $@
 
-grid_test.o: grid_test.cpp
+grid_tests.o: grid_tests.cpp
 	$(CXX) $(CXXFLAGS) -c $<
 
 # View
@@ -83,6 +83,11 @@ maze_demo: maze_demo.o maze.o utils.o
 maze_demo.o: maze_demo.cpp
 	$(CXX) $(CXXFLAGS) -c $<
 
+grid_demo: grid_demo.o grid.o
+	$(CXX) $(CXXFLAGS) $^ -o $@
+
+grid_demo.o: grid_demo.cpp
+	$(CXX) $(CXXFLAGS) -c $<
 
 ### Clean up ###
 .PHONY: clean
