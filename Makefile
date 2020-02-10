@@ -49,10 +49,10 @@ run_tests.o: run_tests.cpp
 	$(CXX) $(CXXFLAGS) -c $<
 
 # Search
-search_test: search_test.o search.o grid.o
+search_tests: search_tests.o search.o grid.o
 	$(CXX) $(CXXFLAGS) $^ -o $@
 
-search_test.o: search_test.cpp
+search_tests.o: search_tests.cpp
 	$(CXX) $(CXXFLAGS) -c $<
 
 # Maze
@@ -87,6 +87,12 @@ grid_demo: grid_demo.o grid.o
 	$(CXX) $(CXXFLAGS) $^ -o $@
 
 grid_demo.o: grid_demo.cpp
+	$(CXX) $(CXXFLAGS) -c $<
+
+search_demo: search_demo.o search.o grid.o
+	$(CXX) $(CXXFLAGS) $^ -o $@
+
+search_demo.o: search_demo.cpp
 	$(CXX) $(CXXFLAGS) -c $<
 
 ### Clean up ###

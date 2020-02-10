@@ -12,7 +12,10 @@ struct Cell
 	int y;
 
 	Cell(int a, int b) : x{ a }, y{ b } {}; // needed for emplace_back()
+    bool operator==(Cell const & other);
+    bool is_neighbour(Cell const & other);
 };
+
 
 enum class State
 {
@@ -20,8 +23,7 @@ enum class State
 	Obstacle,
 	Food,
 	Player,
-	Zombie,
-	Visited
+	Zombie
 };
 
 using GridRow = vector<State>;
@@ -33,10 +35,8 @@ class Grid
 public:
 	// Constructors
 	Grid();
-
 	Grid(GridLayout);
-
-	Grid(string path);
+	Grid(string file_path);
 
 	// methods
 	string to_str() const;
@@ -55,20 +55,15 @@ public:
 
 	// friends
 	friend bool operator==(Grid const& g1, Grid const& g2);
-
 	friend bool operator!=(Grid const& g1, Grid const& g2);
-
 	friend std::ostream& operator<<(std::ostream& out, Grid const& g);
 
 private:
 	// data
 	GridLayout state{};
-
 	// methods
 	GridLayout read_file(string file);
-
 	GridRow parse_line(string line);
-
 };
 
 #endif

@@ -1,10 +1,10 @@
 #include <iostream>
-#include <algorithm> //for sort()
+#include <algorithm> //for sort(), find()
 #include "search.h"
 
 using std::abs;
 
-bool compare_cells(const CandidateCell& a, const CandidateCell& b){
+bool compare_cells(const CandidateCell& a, const CandidateCell& b) {
 	int f1 = a.g + a.h; // f-score is the sum of cost and heuristic value
 	int f2 = b.g + b.h;
 	return f1 > f2;
@@ -17,6 +17,8 @@ bool PathFinder::is_valid_cell(int x, int y)
 {
 	bool on_grid_x = (x >= 0 && x < grid.size());
 	bool on_grid_y = (y >= 0 && y < grid[0].size());
+	if (has_been_visited(x,y))
+	    return false;
 	if (on_grid_x && on_grid_y)
 	{
 		State s = grid[x][y];
@@ -29,7 +31,7 @@ bool PathFinder::is_valid_cell(int x, int y)
 			break;
 		case State::Zombie:
 		case State::Obstacle:
-		case State::Visited:
+//		case State::Visited:
 		default:
 			return false;
 		}
@@ -52,7 +54,7 @@ void PathFinder::sort_open_list()
 void PathFinder::add_to_open_list(int x, int y, int g, int h)
 {
 	openList.emplace_back(x, y, g, h);
-	grid[x][y] = State::Visited;
+//	grid[x][y] = State::Visited;
 }
 
 // Expand current cell's neighbours and add them to the open list
@@ -76,8 +78,18 @@ void PathFinder::expand_neighbours(const CandidateCell& current, Cell goal)
 			int new_g = g + 1;
 			int new_h = calculate_heuristic(new_x, new_y, goal);
 			add_to_open_list(new_x, new_y, new_g, new_h);
+			// Add cell to list of visited cells
+			visited.emplace_back(new_x, new_y);
 		}
 	}
+}
+
+bool PathFinder::has_been_visited(int x, int y){
+    Cell newCell{x,y};
+    if (std::find(visited.begin(), visited.end(), newCell) != visited.end())
+        return true;
+    else
+        return false;
 }
 
 bool PathFinder::search(Cell init, Cell goal)
@@ -89,10 +101,12 @@ bool PathFinder::search(Cell init, Cell goal)
 	int g = 0;
 	int h = calculate_heuristic( x, y, goal);
 	add_to_open_list(x, y, g, h);
+	visited.emplace_back(x,y);
 
 	while(openList.size() > 0)
 	{
 #if DEBUG
+	    std::cout << "===" << std::endl;
 		print_open_list();
 #endif
 		// Get the next cell (with highest value)
@@ -105,13 +119,15 @@ bool PathFinder::search(Cell init, Cell goal)
 		openList.pop_back();
 		int x = current.x;
 		int y = current.y;
-		path.emplace_back(x, y);
+		path.emplace_front(x, y);
 #if DEBUG
 		print_path();
 #endif
 		// Check if we've reached the goal
 		if (x == goal.x && y == goal.y)
 		{
+		    prune_path();
+		    path.reverse();
 			return true;
 		}
 		// If we're not done, expand search to current cell's neighbours
@@ -121,11 +137,16 @@ bool PathFinder::search(Cell init, Cell goal)
 	return false;
 }
 
-deque<Cell> PathFinder::get_path(){
+Path PathFinder::get_path(){
 	return path;
 }
 
-void PathFinder::print_path()
+int PathFinder::path_size() const
+{
+    return path.size();
+}
+
+void PathFinder::print_path() const
 {
 	std::cout << "Path: ";
 	for (auto it = path.begin(); it != path.end(); it++)
@@ -134,7 +155,25 @@ void PathFinder::print_path()
 	}
 	std::cout << std::endl;
 }
-void PathFinder::print_open_list()
+
+void PathFinder::prune_path()
+{
+    auto it = path.begin();
+    auto prev = path.begin();
+    while (it != path.end())
+    {
+        if (!it->is_neighbour(*prev))
+        {
+            it = path.erase(it);
+        }
+        else
+        {
+            prev = it++;
+        }
+    }
+}
+
+void PathFinder::print_open_list() const
 {
 	std::cout << "Open list: ";
 	for (auto it = openList.begin(); it != openList.end(); it++)

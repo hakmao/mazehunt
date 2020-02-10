@@ -26,7 +26,7 @@ TEST_CASE("Initialise Node ", "[node][maze]")
     Node nodeN(4, 5); // West
     Node nodeN(4, 5); // North
 
-    SECTION("Node data at initialisation")
+    SECTION("Node data is correct at initialisation")
     {
         CHECK(node.row == 5);
         CHECK(node.col == 5);
