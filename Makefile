@@ -1,102 +1,38 @@
+TARGET_EXE = mazehunt
+
+SRC_DIR := ./src
+INC_DIR := ./include
+BUILD_DIR := ./build
+
+SRC_FILES := $(shell find $(SRC_DIR) -name *.cpp)
+TEST_FILES := $(shell find $(TEST_DIR) -name *.cpp)
+DEMO_FILES := $(shell find $(DEMO_DIR) -name *.cpp)
+
+OBJ_FILES := $(SRC_FILES:%=$(BUILD_DIR)/%.o)
+
 CXX = g++
-CXXFLAGS = -std=c++17 
-LDFLAGS= -lncurses 
-EXE = mazehunt
-OBJECTS = main.o input_parser.o game.o display.o maze.o node.o utils.o 
+LINKER = g++
+INC_FLAGS := $(addprefix -I, $(INC_DIR))
+CXX_STD := -std=c++17
+CXX_FLAGS = $(INC_FLAGS) $(CXX_STD)
+LD_FLAGS= -lncurses
 
-all: $(EXE)
+MKDIR_P := mkdir -p
 
-$(EXE): $(OBJECTS)
-	$(CXX) $(LDFLAGS) $(CXXFLAGS) -o $(EXE) $(OBJECTS)
+.PHONY: all tests demos clean clean_tests clean_demos
 
-main.o: main.cpp
-	$(CXX) $(CXXFLAGS) -c $< 
+all: $(TARGET_EXE)
 
-input_parser.o: input_parser.cpp
-	$(CXX) $(CXXFLAGS) -c $<
+$(TARGET_EXE): $(OBJ_FILES)
+	$(CXX) $(LD_FLAGS) $(CXX_STD) $(OBJ_FILES) -o $@
 
-game.o: game.cpp 
-	$(CXX) $(CXXFLAGS) -c $< 
-
-display.o: display.cpp 
-	$(CXX) $(CXXFLAGS) -c $<
-
-grid.o: grid.cpp
-	$(CXX) $(CXXFLAGS) -c $<
-
-gameview.o: gameview.cpp
-	$(CXX) $(CXXFLAGS) -c $<
-
-maze.o: maze.cpp 
-	$(CXX) $(CXXFLAGS) -c $< 
-
-node.o: node.cpp 
-	$(CXX) $(CXXFLAGS) -c $< 
-
-utils.o: utils.cpp 
-	$(CXX) $(CXXFLAGS) -c $< 
-
-search.o: search.cpp
-	$(CXX) $(CXXFLAGS) -c $<
-
-### Tests ###
-
-# Run tests
-run_tests: run_tests.o maze.o
-	$(CXX) $(CXXFLAGS) $^ -o $@
-
-run_tests.o: run_tests.cpp
-	$(CXX) $(CXXFLAGS) -c $<
-
-# Search
-search_tests: search_tests.o search.o grid.o
-	$(CXX) $(CXXFLAGS) $^ -o $@
-
-search_tests.o: search_tests.cpp
-	$(CXX) $(CXXFLAGS) -c $<
-
-# Maze
-maze_tests: maze_tests.o maze.o utils.o
-	$(CXX) $(CXXFLAGS) $^ -o $@
-
-maze_tests.o: maze_tests.cpp
-	$(CXX) $(CXXFLAGS) -c $<
-
-# Grid
-grid_tests: grid_tests.o grid.o
-	$(CXX) $(CXXFLAGS) $^ -o $@
-
-grid_tests.o: grid_tests.cpp
-	$(CXX) $(CXXFLAGS) -c $<
-
-# View
-gameview_test: gameview_test.o gameview.o grid.o
-	$(CXX) $(LDFLAGS) $(CXXFLAGS) $^ -o $@
-
-gameview_test.o: gameview_test.cpp
-	$(CXX) $(CXXFLAGS) -c $<
-
-### Demos ###
-maze_demo: maze_demo.o maze.o utils.o
-	$(CXX) $(CXXFLAGS) $^ -o $@
-
-maze_demo.o: maze_demo.cpp
-	$(CXX) $(CXXFLAGS) -c $<
-
-grid_demo: grid_demo.o grid.o
-	$(CXX) $(CXXFLAGS) $^ -o $@
-
-grid_demo.o: grid_demo.cpp
-	$(CXX) $(CXXFLAGS) -c $<
-
-search_demo: search_demo.o search.o grid.o
-	$(CXX) $(CXXFLAGS) $^ -o $@
-
-search_demo.o: search_demo.cpp
-	$(CXX) $(CXXFLAGS) -c $<
+$(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp
+	$(MKDIR_P) $(dir $@)
+	$(CXX) $(CXX_FLAGS) -c $< -o $@
 
 ### Clean up ###
-.PHONY: clean
+
 clean:
 	@echo "Cleaning up..."
-	rm *.o $(EXE) *_test
+	rm -rvf $(BUILD_DIR)
+
