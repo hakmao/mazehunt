@@ -2,11 +2,13 @@
 // Created by Johannes Flieger on 27/12/2019.
 //
 #include <iostream>
+#include <string>
 #include "search.h"
 
 int main()
 {
-	Grid grid("search.grid");
+    const std::string fpath = "data/search.grid";
+	Grid grid(fpath);
     PathFinder finder(grid.global_state());
 	Cell init{ 1, 1 };
 	Cell goal{ 1, 4 };
