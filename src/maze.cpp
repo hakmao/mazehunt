@@ -14,16 +14,20 @@ pair<int, int> Node::neighbour_at(Direction d)
     int c = -1;
     switch (d)
     {
-        case Direction::East:r = row;
+        case Direction::East:
+            r = row;
             c = col + 1;
             break;
-        case Direction::South:r = row + 1;
+        case Direction::South:
+            r = row + 1;
             c = col;
             break;
-        case Direction::West:r = row;
+        case Direction::West:
+            r = row;
             c = col - 1;
             break;
-        case Direction::North:r = row - 1;
+        case Direction::North:
+            r = row - 1;
             c = col;
             break;
     }

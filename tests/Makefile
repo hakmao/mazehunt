@@ -19,36 +19,48 @@ MKDIR_P ?= mkdir -p
 
 
 ### Tests ###
-all: search_tests maze_tests grid_tests gameview_tests
+all: grid_tests maze_tests #search_tests #gameview_tests
 
 # Search
-search_tests: $(BUILD_DIR)/search_tests.o $(BUILD_DIR)/search.o $(BUILD_DIR)/grid.o
-	$(LINKER) $(CXX_FLAGS) $(LD_FLAGS) $^ -o $@
+#search_tests: $(BUILD_DIR)/search_tests.o $(BUILD_DIR)/search.o $(BUILD_DIR)/grid.o
+#	$(LINKER) $(CXX_FLAGS) $(LD_FLAGS) $^ -o $@
 
 # Maze
-maze_tests: $(TEST_DIR)/maze_tests.o $(BUILD_DIR)/maze.o $(BUILD_DIR)/utils.o
+maze_tests: $(BUILD_DIR)/maze_tests.o $(BUILD_DIR)/maze.o $(BUILD_DIR)/utils.o
 	$(LINKER) $(CXX_FLAGS) $(LD_FLAGS) $^ -o $@
 
 # Grid
-grid_tests: $(TEST_DIR)/grid_tests.o $(BUILD_DIR)/grid.o
+grid_tests: $(BUILD_DIR)/grid_tests.o $(BUILD_DIR)/grid.o
 	$(LINKER) $(CXX_FLAGS) $(LD_FLAGS) $^ -o $@
 
 # View
-gameview_tests: $(TEST_DIR)/gameview_tests.o $(BUILD_DIR)/gameview.o $(BUILD_DIR)/grid.o
-	$(LINKER) $(CXX_FLAGS) $(LD_FLAGS) $^ -o $@
+#gameview_tests: $(TEST_DIR)/gameview_tests.o $(BUILD_DIR)/gameview.o $(BUILD_DIR)/grid.o
+#	$(LINKER) $(CXX_FLAGS) $(LD_FLAGS) $^ -o $@
 
 ### Object files ###
-$(BUILD_DIR)/search_tests.o: $(TEST_DIR)/search_tests.cpp
-	$(CPP) $(CPP_FLAGS) -c $< $@
+#$(BUILD_DIR)/search_tests.o: $(TEST_DIR)/search_tests.cpp
+#	$(CXX) $(CXX_FLAGS) -c $< -o $@
 
-$(TEST_DIR)/maze_tests.o: $(TEST_DIR)/maze_tests.cpp
-	$(CPP) $(CPP_FLAGS) -c $< $@
+$(BUILD_DIR)/maze_tests.o: $(TEST_DIR)/maze_tests.cpp
+	$(CXX) $(CXX_FLAGS) -c $< -o $@
 
-$(TEST_DIR)/grid_tests.o: $(TEST_DIR)/grid_tests.cpp
-	$(CPP) $(CPP_FLAGS) -c $< $@
+$(BUILD_DIR)/grid_tests.o: $(TEST_DIR)/grid_tests.cpp
+	$(CXX) $(CXX_FLAGS) -c $< -o $@
 
-$(TEST_DIR)/gameview_test.o: $(TEST_DIR)/gameview_test.cpp
-	$(CPP) $(CPP_FLAGS) -c $< $@
+#$(BUILD_DIR)/gameview_test.o: $(TEST_DIR)/gameview_tests.cpp
+#	$(CXX) $(CXX_FLAGS) -c $< $@
+
+$(BUILD_DIR)/utils.o: $(SRC_DIR)/utils.cpp
+	$(CXX) $(CXX_FLAGS) -c $< -o $@
+
+$(BUILD_DIR)/maze.o: $(SRC_DIR)/maze.cpp
+	$(CXX) $(CXX_FLAGS) -c $< -o $@
+
+$(BUILD_DIR)/grid.o: $(SRC_DIR)/grid.cpp
+	$(CXX) $(CXX_FLAGS) -c $< -o $@
+
+$(BUILD_DIR)/search.o: $(SRC_DIR)/search.cpp
+	$(CXX) $(CXX_FLAGS) -c $< -o $@
 
 ### Clean up ###
 clean:

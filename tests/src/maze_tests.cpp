@@ -21,9 +21,9 @@ TEST_CASE("Node static functions")
 TEST_CASE("Initialise Node ", "[node][maze]")
 {
     Node node(5, 5); // Origin
-    Node nodeN(4, 5); // East
-    Node nodeN(4, 5); // South
-    Node nodeN(4, 5); // West
+    Node nodeE(5, 6); // East
+    Node nodeS(6, 5); // South
+    Node nodeW(5, 4); // West
     Node nodeN(4, 5); // North
 
     SECTION("Node data is correct at initialisation")
@@ -40,18 +40,18 @@ TEST_CASE("Initialise Node ", "[node][maze]")
     SECTION("Check neighbour coordinates")
     {
         auto [rE,cE] = node.neighbour_at( Direction::East);
-        auto [rS,cS] = nodeN.neighbour_at( Direction::South);
+        auto [rS,cS] = node.neighbour_at( Direction::South);
         auto [rW,cW] = node.neighbour_at( Direction::West);
         auto [rN,cN] = node.neighbour_at( Direction::North);
 
         CHECK(rN == 4);
         CHECK(cN == 5);
-        CHECK(rS == 5);
+        CHECK(rS == 6);
         CHECK(cS == 5);
-        CHECK(rE == 4);
-        CHECK(cE == 5);
-        CHECK(rW == 4);
-        CHECK(cW == 5);
+        CHECK(rE == 5);
+        CHECK(cE == 6);
+        CHECK(rW == 5);
+        CHECK(cW == 4);
     }
 }
 
