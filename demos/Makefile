@@ -39,6 +39,9 @@ grid_demo: $(BUILD_DIR)/grid_demo.o $(BUILD_DIR)/grid.o
 search_demo: $(BUILD_DIR)/search_demo.o $(BUILD_DIR)/search.o $(BUILD_DIR)/grid.o
 	$(LINKER) $(CXX_FLAGS) $(LD_FLAGS) $^ -o $@
 
+input_parser_demo: $(BUILD_DIR)/input_parser_demo.o $(BUILD_DIR)/input_parser.o
+	$(LINKER) $(CXX_FLAGS) $(LD_FLAGS) $^ -o $@
+
 ### Objects ###
 $(BUILD_DIR)/maze_demo.o: $(DEMO_DIR)/maze_demo.cpp
 	$(CXX) $(CXX_FLAGS) -c $< -o $@
@@ -47,6 +50,9 @@ $(BUILD_DIR)/grid_demo.o: $(DEMO_DIR)/grid_demo.cpp
 	$(CXX) $(CXX_FLAGS) -c $< -o $@
 
 $(BUILD_DIR)/search_demo.o: $(DEMO_DIR)/search_demo.cpp
+	$(CXX) $(CXX_FLAGS) -c $< -o $@
+
+$(BUILD_DIR)/input_parser_demo.o: $(DEMO_DIR)/input_parser_demo.cpp
 	$(CXX) $(CXX_FLAGS) -c $< -o $@
 
 $(BUILD_DIR)/utils.o: $(SRC_DIR)/utils.cpp
@@ -59,6 +65,9 @@ $(BUILD_DIR)/grid.o: $(SRC_DIR)/grid.cpp
 	$(CXX) $(CXX_FLAGS) -c $< -o $@
 
 $(BUILD_DIR)/search.o: $(SRC_DIR)/search.cpp
+	$(CXX) $(CXX_FLAGS) -c $< -o $@
+
+$(BUILD_DIR)/input_parser.o: $(SRC_DIR)/input_parser.cpp
 	$(CXX) $(CXX_FLAGS) -c $< -o $@
 
 
