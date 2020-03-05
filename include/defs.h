@@ -27,10 +27,10 @@ constexpr const int TEXT_LINES =
 // typedef enum { WALL, EMPTY, PLAYER, FOOD, MONSTER } point_type;
 
 // characters
-//#define CH_EMPTY ' '
-//#define CH_PLAYER '@'
-//#define CH_FOOD '*'
-//#define CH_ZOMBIE '8'
+#define CH_EMPTY ' '
+#define CH_PLAYER '@'
+#define CH_FOOD '*'
+#define CH_ZOMBIE '8'
 
 // colours
 #define COL_WALL COLOR_RED

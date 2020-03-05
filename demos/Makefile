@@ -27,7 +27,7 @@ MKDIR_P ?= mkdir -p
 #	$(CXX) $(CXX_FLAGS) -c $< -o $@
 ### All ###
 
-all: maze_demo grid_demo search_demo
+all: maze_demo grid_demo search_demo input_parser_demo
 
 ## Demos ###
 maze_demo: $(BUILD_DIR)/maze_demo.o $(BUILD_DIR)/maze.o $(BUILD_DIR)/utils.o
@@ -42,7 +42,10 @@ search_demo: $(BUILD_DIR)/search_demo.o $(BUILD_DIR)/search.o $(BUILD_DIR)/grid.
 input_parser_demo: $(BUILD_DIR)/input_parser_demo.o $(BUILD_DIR)/input_parser.o
 	$(LINKER) $(CXX_FLAGS) $(LD_FLAGS) $^ -o $@
 
-### Objects ###
+display_demo: $(BUILD_DIR)/display_demo.o $(BUILD_DIR)/display.o $(BUILD_DIR)/maze.o  $(BUILD_DIR)/utils.o
+	$(LINKER) $(CXX_FLAGS) $(LD_FLAGS) $^ -o $@
+
+### Demo Objects ###
 $(BUILD_DIR)/maze_demo.o: $(DEMO_DIR)/maze_demo.cpp
 	$(CXX) $(CXX_FLAGS) -c $< -o $@
 
@@ -55,6 +58,10 @@ $(BUILD_DIR)/search_demo.o: $(DEMO_DIR)/search_demo.cpp
 $(BUILD_DIR)/input_parser_demo.o: $(DEMO_DIR)/input_parser_demo.cpp
 	$(CXX) $(CXX_FLAGS) -c $< -o $@
 
+$(BUILD_DIR)/display_demo.o: $(DEMO_DIR)/display_demo.cpp
+	$(CXX) $(CXX_FLAGS) -c $< -o $@
+
+### Objects ###
 $(BUILD_DIR)/utils.o: $(SRC_DIR)/utils.cpp
 	$(CXX) $(CXX_FLAGS) -c $< -o $@
 
@@ -70,6 +77,8 @@ $(BUILD_DIR)/search.o: $(SRC_DIR)/search.cpp
 $(BUILD_DIR)/input_parser.o: $(SRC_DIR)/input_parser.cpp
 	$(CXX) $(CXX_FLAGS) -c $< -o $@
 
+$(BUILD_DIR)/display.o: $(SRC_DIR)/display.cpp
+	$(CXX) $(CXX_FLAGS) -c $< -o $@
 
 ### Clean up ###
 
